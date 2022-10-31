@@ -1,0 +1,20 @@
+Kết quả được chứa ở $s1
+ Lấy ra MSB của $s0
+.text
+li $s0, 0x312ACD81 # Set value to s0
+li $t0, 0xFF000000 # Mask to get MSB
+and $s1, $s0, $t0 # Get MSB
+ Xóa LSB của $s0
+.text
+li $s0, 0x312ACD81 # Set value to s0
+li $t0, 0xffffff00 # Mask to clear LSB
+and $s1, $s0, $t0 # Clear LSB
+ Đặt 8 bit bên phải của $s0 là 1
+.text
+li $s0, 0x312ACD81 # Set value to s0
+li $t0, 0x000000ff # Mask to Set LSB
+or $s1, $s0, $t0 # Set LSB
+ Xóa $s0 ($s0 = 0)
+.text
+li $s0, 0x312ACD81 # Set value to s0
+and $s0, $s0, $zero # Clear $s0

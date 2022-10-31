@@ -1,0 +1,29 @@
+a.	
+.text
+a.
+li $s1, 10
+bltz $s1, NEGSET # Branch to set $s0 = -$s1 if s1 < 0
+add $s0, $s1, $zero # s0 = s1 if s1 > 0
+j EXIT
+NEGSET:
+li $t0, 0xffffffff # Load Mask to t0
+xor $s3, $s1, $t0 # Set s0 = -s1
+addi $s0, $s3, 1
+EXIT:
+
+
+b.	
+.text 
+add $s0, $s1, $zero # s0 = s1
+
+
+c.	
+.text 
+li $s2, 0xffffffff 
+xor $s0, $s1, $s2 # s0 = not(s1)
+
+d.	
+.text 
+slt $t1, $s1, $s2 
+bne $t1, $zero, label 
+beq $s1, $s2, label

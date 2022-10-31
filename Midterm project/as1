@@ -1,0 +1,65 @@
+.data
+text: .asciiz "Nhap so nguyen duong n = "
+
+.text
+main:
+la $a0, text 
+
+jal print_text	#in text
+jal read_int	#doc so nhap vao
+
+move $s1, $v0 # $s1 = $v0
+li $s2, 0 # i =0
+li $s3, 0 # j =0
+
+div: 
+	ble $s1, 0, next
+	div $s1, $s1,8
+	mfhi $a0 #luu so du
+	jal stack_push
+	addi $s2, $s2, 1 #i++
+	j div
+
+next: #in lan luot tung so du trong stack
+	bge $s3, $s2, print_done
+	jal stack_pop
+	addi $a0, $v0, 0 #luu gia tri vua duoc pop
+	jal print_int
+	addi $s3, $s3, 1
+	j next
+	
+print_done: 
+	j end_program
+	
+print_text: 
+	li $v0, 4
+	syscall
+	jr $ra
+
+read_int: 
+	li $v0, 5 
+	syscall
+	jr $ra
+
+print_int:
+	li $v0, 1 #print interger
+	syscall
+	jr $ra
+	
+print_space:
+	addi $a0,$zero, 32 # $a0 = " "
+	li $v0, 11 #print character
+	syscall
+	jr $ra
+
+stack_push:
+	addi $sp, $sp, -4 # $sp -=4 
+	sw $a0, 0($sp) #put a word to stack
+	jr $ra 
+
+stack_pop:
+	lw $v0, 0($sp) #get a word form stack
+	addi $sp, $sp, 4 # $sp +=4 
+	jr $ra
+
+end_program:

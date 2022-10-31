@@ -1,0 +1,19 @@
+#Laboratory Exercise 3, Home Assignment 1
+start:
+addi $s1,$zero,1 #i=1
+addi $s2,$zero,-2 #j=-2
+add $s3,$1,$s2 # i+j
+addi $s4,$zero,4 # m=4
+addi $s5,$zero,5 # n=5
+add $s6 ,$s4,$s5 # m+n
+
+slt $t0,$s3,$s6 #  i +j < m + n
+bne $t0,$zero,else # branch to else if
+addi $t2,$t2,-1 # begin else part: y=y-1
+add $t3,$t3,$t3 # z=2*z
+
+j endif # skip “else” part
+else: 
+addi $t1,$t1,1 # then part: x=x+1
+addi $t3,$zero,1 # z=1
+endif:

@@ -1,0 +1,34 @@
+.data
+Xuat1: .asciiz "Nhap so thu 1 "
+Xuat2: .asciiz "Nhap so thu 2 "
+Xuat3: .asciiz "Result: "
+
+.text
+    la $a0, Xuat1	    # print string Xuat1
+    li $v0, 4
+    syscall
+    
+    li $v0, 5	    # nhap so nguyen 
+    syscall
+    add $t1,$zero,$v0
+    
+    la $a0, Xuat2	    # print string Xuat2
+    li $v0, 4
+    syscall
+    
+    li $v0, 5	    # nhap so nguyen 
+    syscall
+    add $t2,$zero,$v0
+    
+    add $t3,$t1,$t2
+    
+    la $a0, Xuat3	    # print string Xuat3
+    li $v0, 4
+    syscall
+    
+    li $v0, 1	    # In ra tong 2 so
+    add $a0,$zero,$t3
+    syscall
+    
+    
+    

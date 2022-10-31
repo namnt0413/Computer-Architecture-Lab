@@ -1,0 +1,25 @@
+- Bộ đếm chương trình PC
+(Program Counter) là thanh ghi  của CPU giữ địa chỉ của lệnh cần  nhận vào để thực hiện
+
+- PC tăng bao nhiêu? 
+	◼ Tùy thuộc vào độ dài của lệnh vừa 
+	được nhận
+	◼ MIPS: lệnh có độ dài 32-bit, PC tăng 4
+
+◼ Địa chỉ của ngăn nhớ cần đọc/ghi 
+= (địa chỉ cơ sở) + (offset)
+
+- Tập thanh ghi của MIPS
+Tên thanh ghi Số hiệu thanh ghi Công dụng
+$zero 		0 		the constant value 0, chứa hằng số = 0
+$at 		1 		assembler temporary, giá trị tạm thời cho hợp ngữ
+$v0-$v1 	2-3 		procedure return values, các giá trị trả về của thủ tục
+$a0-$a3 	4-7 		procedure arguments, các tham số vào của thủ tục
+$t0-$t7 	8-15		temporaries, chứa các giá trị tạm thời
+$s0-$s7 	16-23 		saved variables, lưu các biến
+$t8-$t9 	24-25		more temporarie, chứa các giá trị tạm thời
+$k0-$k1 	26-27 		OS temporaries, các giá trị tạm thời của OS
+$gp 		28 		global pointer, con trỏ toàn cục
+$sp 		29 		stack pointer, con trỏ ngăn xếp
+$fp 		30 		frame pointer, con trỏ khung
+$ra 		31 		procedure return address, địa chỉ trở về của thủ tục

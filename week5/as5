@@ -1,0 +1,30 @@
+.data
+string: .space 21
+.text
+la $a0, string # a0 chua dia chi cua string
+li $s0, -1 # s0 la i
+loop:
+add $s0, $s0, 1 #s0 = s0 + 1
+addi $s3, $s0, -19 #s3 = s1 -20 = count - 20
+beq $s3, $zero, endloop#neu so luong qua 20, thoat
+nop
+li $v0, 12 #doc vao v0
+syscall
+add $s4, $v0, -10 # Kiem tra v0 co phai Enter?
+beq $s4, $zero, endloop# Neu co thoat
+add $s1, $s0, $a0 #s1 = dia chi cua a[i]
+sb $v0, 0($s1) #Luu vao a[i]
+j loop
+nop
+endloop:
+print_loop:
+li $v0, 11 # Ham 11 in character
+la $a2, string
+lb $a0, 0($s1) # In s1
+syscall
+beq $s1, $a2, end_print_loop # Neu den a[0], thoat
+nop
+addi $s1, $s1, -1 # s1= s1-1
+j print_loop
+nop
+end_print_loop:

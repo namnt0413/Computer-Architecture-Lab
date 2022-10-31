@@ -1,0 +1,106 @@
+.data
+NhapN: .asciiz "Nhap so phan tu mang: "
+Xuat_Mang: .asciiz "Mang vua nhap la: \n"
+Xuat: .asciiz "Nhap phan tu thu "
+Xuat_Min: .asciiz "Cap phan tu lien ke co tong nho nhat la : "
+Space: .asciiz " va "
+
+tong: .word 0
+a: .word 0:100
+
+.text
+.globl main
+main:
+ 
+
+la $a0, NhapN	# in NhapN
+li $v0, 4
+syscall
+ 
+
+li $v0, 5	# nhap n va luu vao $s0
+syscall
+move $s0, $v0
+ 
+li $t0, 0	# khoi tao vong lap , i = 0
+la $a1, a	#load a vao $a1
+ 
+ li $s1,0 	# khoi tao tong 2 phan tu min =0
+ 
+Enter:
+
+    blt $t0, $s0, enter_Element	    # Neu i < n thi enter_Element
+    j out
+enter_Element:
+
+    la $a0, Xuat	    # print string Xuat
+    li $v0, 4
+    syscall
+    
+
+    li $v0, 1	    # print index
+    move $a0, $t0
+    syscall
+    
+
+    li $v0, 5	    # nhap so nguyen va luu vao mang
+    syscall
+    sw $v0, ($a1)	#luu phan tu moi nhap vao mang
+    lw $v1,-4($a1)	# load phan tu lien truoc phan tu moi nhap
+    
+    addi $t0, $t0, 1	    #Tang chi so
+    addi $a1, $a1, 4
+    
+   # $s3 la bien lien truoc bien nhap vao hien tai, 
+   # $s2 la tong hien tai
+   # $s1 la tong be nhat hien tai, 
+   # $s4,$s5 luu gia tri 2 phan tu co tog be nhat
+   
+    add $s2,$v0,$s3 	# tinh lai tong moi 	 
+    add $s3,$v0,$zero # cap nhat lai $s3
+   
+    # neu so phan tu la 1 thi nhap tiep
+    addi $t3,$zero,1	    # neu so phan tu la 1 thi nhap tiep
+    slt $t1,$t3,$t0	# 1 < t0  ? 1:0
+    beq $t1,$zero,Enter 
+        
+    #neu so phan tu la 2 thi gan $s1 = tong 2 so do    
+    addi $t3,$zero,2	#neu so phan tu la 2 thi gan $s1 = tong 2 so do    
+    slt $t1,$t3,$t0	# 2 < t0  ? 1:0   
+    beq $t1,$zero,FirstSum 
+    
+
+    # so sanh voi tong min
+    slt $t2,$s2,$s1 	# $t2 = $s2 < $s1 ( tong moi < tong cu  ? 1: 0 
+    beq $t2,$zero,Enter 	# t2=0 (  tong moi > tong cu => quay lai enter
+    add $s1,$s2,$zero	# t2=1  (  tong moi < tong cu => gan lai $s1 )
+    
+    #gan lan luot 2 phan tu do
+    add $s5,$v0,$zero
+    add $s4,$v1,$zero
+
+    j Enter
+    
+FirstSum:
+    add $s1,$s2,$zero
+    add $s5,$v0,$zero
+    add $s4,$v1,$zero
+    j Enter
+    
+out:   
+
+    la $a0,Xuat_Min	    #print string Xuat_Min
+    li $v0,4
+   syscall
+   
+    li $v0, 1	# print 2 phan tu min
+    move $a0, $s4
+    syscall
+    
+    la $a0,Space	    #print string Space
+    li $v0,4
+    syscall
+    
+    li $v0, 1	# print 2 phan tu min
+    move $a0, $s5
+    syscall
